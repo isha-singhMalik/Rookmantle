@@ -1,0 +1,98 @@
+@import "tailwindcss";
+
+:root {
+  /* Core palette */
+  --graphite: #1b2430;
+  --graphite-2: #232f3d;
+  --mist: #f4f5f2;
+  --paper: #ffffff;
+  --ink: #171d24;
+  --ink-soft: #5a6472;
+  --line: #d8dce0;
+  --line-soft: #e7e9ec;
+
+  /* Verdict language — used consistently everywhere */
+  --allow: #3f8f6f;
+  --allow-bg: #e8f3ee;
+  --approval: #c98a2c;
+  --approval-bg: #faf1e0;
+  --block: #c4453b;
+  --block-bg: #fbeae8;
+
+  --background: var(--mist);
+  --foreground: var(--ink);
+}
+
+@theme inline {
+  --color-graphite: var(--graphite);
+  --color-graphite-2: var(--graphite-2);
+  --color-mist: var(--mist);
+  --color-paper: var(--paper);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-line: var(--line);
+  --color-line-soft: var(--line-soft);
+  --color-allow: var(--allow);
+  --color-allow-bg: var(--allow-bg);
+  --color-approval: var(--approval);
+  --color-approval-bg: var(--approval-bg);
+  --color-block: var(--block);
+  --color-block-bg: var(--block-bg);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+
+  --font-display: var(--font-display-stack);
+  --font-sans: var(--font-sans-stack);
+  --font-mono: var(--font-mono-stack);
+}
+
+:root {
+  /* System stacks, chosen for character rather than as a generic default:
+     geometric/rounded for display (echoes the product's "control room" precision),
+     a neutral UI sans for dense dashboard body copy, and a true monospace
+     reserved for machine-generated data (IDs, timestamps, logs). No external
+     font requests — this keeps builds fast and works in offline/restricted
+     network environments. Swap in next/font/google (Space Grotesk / Inter /
+     IBM Plex Mono) any time you have unrestricted internet at build time. */
+  --font-display-stack: "Century Gothic", "Avenir Next", "Segoe UI", ui-sans-serif, system-ui, sans-serif;
+  --font-sans-stack: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, ui-sans-serif, sans-serif;
+  --font-mono-stack: ui-monospace, "SF Mono", "Cascadia Code", "Roboto Mono", Menlo, Consolas, monospace;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+}
+
+::selection {
+  background: var(--graphite);
+  color: white;
+}
+
+.font-display {
+  font-family: var(--font-display);
+}
+
+.font-mono {
+  font-family: var(--font-mono-stack);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
