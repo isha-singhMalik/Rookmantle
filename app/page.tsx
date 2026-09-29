@@ -177,12 +177,28 @@ export default function LandingPage() {
         </div>
       </section>
 
-      <footer className="border-t border-line py-6">
-        <div className="max-w-6xl mx-auto px-5 md:px-8 flex items-center justify-between text-xs text-ink-soft">
-          <span>Rookmantle — prototype build</span>
-          <span className="font-mono">v0.1.0</span>
-        </div>
-      </footer>
+   <footer className="border-t border-line py-8">
+  <div className="max-w-6xl mx-auto px-5 md:px-8">
+    <div className="flex flex-wrap items-center justify-between gap-4 mb-5">
+      <span className="text-xs text-ink-soft">Rookmantle — prototype build</span>
+      <nav className="flex flex-wrap gap-x-5 gap-y-2 text-xs text-ink-soft">
+        <Link href="/legal/privacy-policy" className="hover:text-ink">Privacy Policy</Link>
+        <Link href="/legal/terms-of-service" className="hover:text-ink">Terms of Service</Link>
+        <Link href="/legal/cookie-policy" className="hover:text-ink">Cookie Policy</Link>
+        <Link href="/legal/security-policy" className="hover:text-ink">Security</Link>
+        <Link href="/legal/acceptable-use-policy" className="hover:text-ink">Acceptable Use</Link>
+      </nav>
+    </div>
+    <div className="flex flex-wrap items-center justify-between gap-2 pt-4 border-t border-line-soft">
+      <p className="text-xs text-ink-soft">
+        Made by <span className="text-ink font-medium">Isha Singh Malik</span> — Founder,{" "}
+        <span className="text-ink font-medium">ZeroDay Hero</span> &amp;{" "}
+        <span className="text-ink font-medium">Rookmantle</span>
+      </p>
+      <span className="font-mono text-xs text-ink-soft">v0.1.0</span>
+    </div>
+  </div>
+</footer>
     </div>
   );
 }
