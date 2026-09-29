@@ -40,7 +40,7 @@ export default function LandingPage() {
         <div className="max-w-6xl mx-auto flex items-center justify-between h-16 px-5 md:px-8">
           <div className="flex items-center gap-2">
             <ShieldHalf size={20} className="text-graphite" strokeWidth={2.25} />
-            <span className="font-display font-semibold text-ink">Secure AI Workforce</span>
+            <span className="font-display font-semibold text-ink">Rookmantle</span>
           </div>
           <nav className="hidden md:flex items-center gap-7 text-sm text-ink-soft">
             <a href="#how-it-works" className="hover:text-ink">How it works</a>
@@ -179,7 +179,7 @@ export default function LandingPage() {
 
       <footer className="border-t border-line py-6">
         <div className="max-w-6xl mx-auto px-5 md:px-8 flex items-center justify-between text-xs text-ink-soft">
-          <span>Secure AI Workforce — prototype build</span>
+          <span>Rookmantle — prototype build</span>
           <span className="font-mono">v0.1.0</span>
         </div>
       </footer>

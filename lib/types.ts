@@ -1,4 +1,4 @@
-// Core domain types for Secure AI Workforce
+// Core domain types for Rookmantle
 
 export type Verdict = "ALLOW" | "BLOCK" | "REQUIRE_APPROVAL";
 

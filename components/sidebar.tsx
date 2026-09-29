@@ -57,7 +57,7 @@ export function Sidebar() {
       <Link href="/" className="flex items-center gap-2 px-5 h-16 border-b border-line">
         <ShieldHalf size={20} className="text-graphite" strokeWidth={2.25} />
         <span className="font-display font-semibold text-[15px] text-ink leading-tight">
-          Secure AI<br />Workforce
+        Rookmantle
         </span>
       </Link>
       <nav className="flex-1 overflow-y-auto py-4 px-3">
