@@ -25,19 +25,19 @@ export const siteConfig = {
     showDraftNotice: true,
     effectiveDate: "5 November 2026",
 
-    companyName: "", // e.g. "Rookmantle Technologies Pvt. Ltd."
-    registeredAddress: "",
-    privacyEmail: "",
-    legalEmail: "",
-    securityEmail: "",
-    abuseEmail: "",
+    companyName: "Rookmantle", // e.g. "Rookmantle Technologies Pvt. Ltd."
+    registeredAddress: "India",
+    privacyEmail: "intentra.team@gmail.com",
+    legalEmail: "intentra.team@gmail.com",
+    securityEmail: "intentra.team@gmail.com",
+    abuseEmail: "intentra.team@gmail.com",
     grievanceOfficerName: "",
     grievanceOfficerEmail: "",
 
     governingLaw: "India",
     jurisdictionCity: "", // courts of which city, e.g. "New Delhi"
 
-    hostingRegion: "", // e.g. "United States (Vercel)"
+    hostingRegion: "US", // e.g. "United States (Vercel)"
     analyticsProvider: "", // leave empty while no analytics are running
 
     liabilityCapPeriod: "12 months",

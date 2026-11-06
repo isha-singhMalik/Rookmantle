@@ -25,22 +25,22 @@ export function Placeholder({ children }: { children: React.ReactNode }) {
 }
 
 const FIELD_LABEL: Record<LegalField, string> = {
-  showDraftNotice: "",
-  effectiveDate: "Effective Date",
-  companyName: "Company Legal Name",
-  registeredAddress: "registered address",
-  privacyEmail: "privacy email",
-  legalEmail: "legal email",
-  securityEmail: "security email",
-  abuseEmail: "abuse email",
+  showDraftNotice: "False",
+  effectiveDate: "05/11/2026",
+  companyName: "Rookmantle",
+  registeredAddress: "India",
+  privacyEmail: "intentra.team@gmail.com",
+  legalEmail: "intentra.team@gmail.com",
+  securityEmail: "intentra.team@gmail.com",
+  abuseEmail: "intentra.team@gmail.com",
   grievanceOfficerName: "Grievance Officer name",
   grievanceOfficerEmail: "Grievance Officer email",
   governingLaw: "governing law",
-  jurisdictionCity: "city",
-  hostingRegion: "hosting region",
+  jurisdictionCity: "Gzb",
+  hostingRegion: "US",
   analyticsProvider: "analytics provider",
   liabilityCapPeriod: "liability period",
-  securityResponseTime: "response time",
+  securityResponseTime: "2-7 Days",
 };
 
 /** Renders a value from lib/site-config.ts, or an amber placeholder if it's still empty. */
