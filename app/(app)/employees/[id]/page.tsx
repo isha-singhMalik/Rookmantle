@@ -9,6 +9,7 @@ import { ToolsPanel } from "@/components/employee/tools-panel";
 import { PermissionsPanel } from "@/components/employee/permissions-panel";
 import { ApprovalPanel } from "@/components/employee/approval-panel";
 import { SimulatePanel } from "@/components/employee/simulate-panel";
+import { DeleteEmployee } from "@/components/employee/delete-employee";
 import { CheckCircle2, ShieldX, Clock } from "lucide-react";
 
 export default async function EmployeeDetailPage({ params }: { params: Promise<{ id: string }> }) {
@@ -120,6 +121,10 @@ export default async function EmployeeDetailPage({ params }: { params: Promise<{
           </Panel>
           <SimulatePanel employee={employee} />
         </div>
+      </div>
+
+      <div className="mt-6">
+        <DeleteEmployee employeeId={employee.id} employeeName={employee.name} />
       </div>
     </div>
   );

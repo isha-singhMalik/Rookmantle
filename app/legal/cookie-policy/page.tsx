@@ -1,10 +1,13 @@
-import { H2, H3, P, Ul, Placeholder, EffectiveDate, DraftNotice } from "@/components/legal/legal-content";
+import { Metadata } from "next";
+import { H2, H3, P, Ul, Site, EffectiveDate, DraftNotice } from "@/components/legal/legal-content";
+
+export const metadata: Metadata = { title: "Cookie Policy" };
 
 export default function CookiePolicyPage() {
   return (
     <article>
       <h1 className="font-display text-2xl font-semibold text-ink mb-1">Cookie Policy</h1>
-      <EffectiveDate date="[Effective Date]" />
+      <EffectiveDate />
       <DraftNotice />
 
       <P>
@@ -25,7 +28,7 @@ export default function CookiePolicyPage() {
       <Ul>
         <li>Session and authentication cookies that keep you logged in and secure.</li>
         <li>CSRF/security tokens required for the Service to function.</li>
-        <li>PWA service worker cache, used to serve the app shell offline and speed up repeat visits.</li>
+        <li>PWA service worker cache, used to speed up repeat visits (static assets) and show a basic offline page when you have no connection.</li>
       </Ul>
       <H3>Functional</H3>
       <Ul>
@@ -33,8 +36,8 @@ export default function CookiePolicyPage() {
       </Ul>
       <H3>Analytics</H3>
       <Ul>
-        <li>Aggregated usage analytics to understand which features are used, if enabled (
-          <Placeholder>name your analytics provider, e.g. Plausible/PostHog/GA</Placeholder>).</li>
+        <li>Aggregated usage analytics to understand which features are used. Analytics provider:{" "}
+          <Site field="analyticsProvider" /> (none is enabled unless named here).</li>
       </Ul>
       <H3>Marketing</H3>
       <Ul>
@@ -66,7 +69,7 @@ export default function CookiePolicyPage() {
 
       <H2>6. Changes & contact</H2>
       <P>
-        We may update this policy as our use of cookies changes. Questions: <Placeholder>privacy@rookmantle.example</Placeholder>.
+        We may update this policy as our use of cookies changes. Questions: <Site field="privacyEmail" />.
       </P>
     </article>
   );

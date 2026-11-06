@@ -1,6 +1,6 @@
 import { db } from "@/lib/store";
 import { INDUSTRIES } from "@/lib/reference-data";
-import { PageHeader, Panel, Avatar, LinkButton } from "@/components/ui/primitives";
+import { PageHeader, Panel, Avatar, LinkButton, EmptyState } from "@/components/ui/primitives";
 import { StatusDot } from "@/components/ui/badges";
 import Link from "next/link";
 
@@ -16,6 +16,13 @@ export default function EmployeesPage() {
         action={<LinkButton href="/employees/new">Deploy AI employee</LinkButton>}
       />
 
+      {employees.length === 0 && (
+        <EmptyState
+          title="No AI employees yet"
+          detail="Deploy your first AI employee from the marketplace to get started."
+        />
+      )}
+      {employees.length > 0 && (
       <Panel className="divide-y divide-line-soft">
         {employees.map((emp) => (
           <Link
@@ -47,6 +54,7 @@ export default function EmployeesPage() {
           </Link>
         ))}
       </Panel>
+      )}
     </div>
   );
 }

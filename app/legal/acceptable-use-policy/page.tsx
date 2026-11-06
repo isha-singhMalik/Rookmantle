@@ -1,10 +1,13 @@
-import { H2, P, Ul, Placeholder, EffectiveDate, DraftNotice } from "@/components/legal/legal-content";
+import { Metadata } from "next";
+import { H2, P, Ul, Site, EffectiveDate, DraftNotice } from "@/components/legal/legal-content";
+
+export const metadata: Metadata = { title: "Acceptable Use Policy" };
 
 export default function AcceptableUsePolicyPage() {
   return (
     <article>
       <h1 className="font-display text-2xl font-semibold text-ink mb-1">Acceptable Use Policy</h1>
-      <EffectiveDate date="[Effective Date]" />
+      <EffectiveDate />
       <DraftNotice />
 
       <P>
@@ -41,7 +44,7 @@ export default function AcceptableUsePolicyPage() {
       <H2>3. Reporting misuse</H2>
       <P>
         If you become aware of misuse of the Service by another user, report it to{" "}
-        <Placeholder>abuse@rookmantle.example</Placeholder>.
+        <Site field="abuseEmail" />.
       </P>
 
       <H2>4. Enforcement</H2>

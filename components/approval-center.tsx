@@ -9,7 +9,7 @@ import { CATEGORY_LABEL } from "@/lib/security-engine";
 import { Check, X, Clock3 } from "lucide-react";
 import Link from "next/link";
 
-export function ApprovalCenter({ logs }: { logs: ActionLogEntry[] }) {
+export function ApprovalCenter({ logs, existingEmployeeIds }: { logs: ActionLogEntry[]; existingEmployeeIds: string[] }) {
   const [isPending, startTransition] = useTransition();
 
   const pending = logs.filter((l) => l.approvalStatus === "pending");
@@ -32,9 +32,13 @@ export function ApprovalCenter({ logs }: { logs: ActionLogEntry[] }) {
                     <p className="font-medium text-sm text-ink">{log.action}</p>
                     <p className="text-xs text-ink-soft mt-1 max-w-lg">{log.reason}</p>
                     <div className="flex items-center gap-2 mt-2 text-xs text-ink-soft font-mono flex-wrap">
-                      <Link href={`/employees/${log.employeeId}`} className="hover:underline">
-                        {log.employeeName}
-                      </Link>
+                      {existingEmployeeIds.includes(log.employeeId) ? (
+                        <Link href={`/employees/${log.employeeId}`} className="hover:underline">
+                          {log.employeeName}
+                        </Link>
+                      ) : (
+                        <span>{log.employeeName} (deleted)</span>
+                      )}
                       · {CATEGORY_LABEL[log.category]} · {log.tool} · {new Date(log.timestamp).toLocaleString()}
                     </div>
                   </div>

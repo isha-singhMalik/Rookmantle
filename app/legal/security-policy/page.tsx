@@ -1,10 +1,13 @@
-import { H2, P, Ul, Placeholder, EffectiveDate, DraftNotice } from "@/components/legal/legal-content";
+import { Metadata } from "next";
+import { H2, P, Ul, Site, EffectiveDate, DraftNotice } from "@/components/legal/legal-content";
+
+export const metadata: Metadata = { title: "Security & Responsible Disclosure" };
 
 export default function SecurityPolicyPage() {
   return (
     <article>
       <h1 className="font-display text-2xl font-semibold text-ink mb-1">Security Policy & Responsible Disclosure</h1>
-      <EffectiveDate date="[Effective Date]" />
+      <EffectiveDate />
       <DraftNotice />
 
       <P>
@@ -22,8 +25,8 @@ export default function SecurityPolicyPage() {
         <li>Regular dependency and vulnerability scanning of the codebase.</li>
       </Ul>
       <P>
-        <Placeholder>Add specifics once in production: encryption at rest, hosting provider, penetration
-        testing cadence, SOC 2 / ISO 27001 status if applicable.</Placeholder>
+        As the product matures we will publish more detail here, such as encryption at rest, penetration
+        testing, and any independent security certifications.
       </P>
 
       <H2>2. Reporting a vulnerability</H2>
@@ -32,7 +35,7 @@ export default function SecurityPolicyPage() {
         report it responsibly:
       </P>
       <Ul>
-        <li>Email <Placeholder>security@rookmantle.example</Placeholder> with a clear description, steps to reproduce, and any proof-of-concept code.</li>
+        <li>Email <Site field="securityEmail" /> with a clear description, steps to reproduce, and any proof-of-concept code.</li>
         <li>Give us a reasonable time to investigate and remediate before any public disclosure.</li>
         <li>Do not access, modify, or exfiltrate data beyond what&apos;s needed to demonstrate the issue.</li>
         <li>Do not run automated scanners that could degrade service for other users, and do not attempt
@@ -41,10 +44,10 @@ export default function SecurityPolicyPage() {
 
       <H2>3. Our commitment</H2>
       <Ul>
-        <li>We will acknowledge your report within <Placeholder>2 business days</Placeholder>.</li>
+        <li>We will acknowledge your report within <Site field="securityResponseTime" />.</li>
         <li>We will keep you updated as we investigate and remediate.</li>
         <li>We will not pursue legal action against researchers who follow this policy in good faith.</li>
-        <li><Placeholder>If you offer a bug bounty, describe scope and rewards here. If not, remove this line.</Placeholder></li>
+        <li>We do not currently run a paid bug bounty programme, but we are glad to credit researchers who report valid issues, with their permission.</li>
       </Ul>
 
       <H2>4. Out of scope</H2>
@@ -63,7 +66,7 @@ export default function SecurityPolicyPage() {
       </P>
 
       <H2>6. Contact</H2>
-      <P><Placeholder>security@rookmantle.example</Placeholder></P>
+      <P><Site field="securityEmail" /></P>
     </article>
   );
 }

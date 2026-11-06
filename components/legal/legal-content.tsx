@@ -1,3 +1,5 @@
+import { siteConfig, LegalField } from "@/lib/site-config";
+
 export function H2({ children }: { children: React.ReactNode }) {
   return <h2 className="font-display text-lg font-semibold text-ink mt-8 mb-2.5">{children}</h2>;
 }
@@ -22,18 +24,45 @@ export function Placeholder({ children }: { children: React.ReactNode }) {
   );
 }
 
-export function EffectiveDate({ date }: { date: string }) {
-  return <p className="text-xs text-ink-soft font-mono mb-8">Last updated: {date}</p>;
+const FIELD_LABEL: Record<LegalField, string> = {
+  showDraftNotice: "",
+  effectiveDate: "Effective Date",
+  companyName: "Company Legal Name",
+  registeredAddress: "registered address",
+  privacyEmail: "privacy email",
+  legalEmail: "legal email",
+  securityEmail: "security email",
+  abuseEmail: "abuse email",
+  grievanceOfficerName: "Grievance Officer name",
+  grievanceOfficerEmail: "Grievance Officer email",
+  governingLaw: "governing law",
+  jurisdictionCity: "city",
+  hostingRegion: "hosting region",
+  analyticsProvider: "analytics provider",
+  liabilityCapPeriod: "liability period",
+  securityResponseTime: "response time",
+};
+
+/** Renders a value from lib/site-config.ts, or an amber placeholder if it's still empty. */
+export function Site({ field }: { field: LegalField }) {
+  const value = siteConfig.legal[field];
+  if (typeof value === "string" && value.trim()) return <>{value}</>;
+  return <Placeholder>{FIELD_LABEL[field]}</Placeholder>;
+}
+
+export function EffectiveDate() {
+  return <p className="text-xs text-ink-soft font-mono mb-8">Last updated: {siteConfig.legal.effectiveDate}</p>;
 }
 
 export function DraftNotice() {
+  if (!siteConfig.legal.showDraftNotice) return null;
   return (
     <div className="rounded-md border border-approval/30 bg-approval-bg p-4 mb-8">
-      <p className="text-sm text-approval font-medium mb-1">This is a draft template, not legal advice</p>
+      <p className="text-sm text-approval font-medium mb-1">This is a draft, not legal advice</p>
       <p className="text-sm text-ink-soft leading-relaxed">
-        Fields shown in <Placeholder>amber</Placeholder> need to be filled in with your real details.
-        Have this reviewed by a lawyer in your jurisdiction before relying on it, especially once the
-        product handles real user accounts, personal data, or payments.
+        Fields shown in <Placeholder>amber</Placeholder> have not been filled in yet. This policy has not
+        yet been reviewed by a lawyer and should be before the product handles real user accounts,
+        personal data, or payments.
       </p>
     </div>
   );

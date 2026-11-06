@@ -8,7 +8,7 @@ import { RiskBadge } from "@/components/ui/badges";
 import { AlertTriangle, Check } from "lucide-react";
 import Link from "next/link";
 
-export function AlertList({ alerts }: { alerts: SecurityAlert[] }) {
+export function AlertList({ alerts, existingEmployeeIds }: { alerts: SecurityAlert[]; existingEmployeeIds: string[] }) {
   const [isPending, startTransition] = useTransition();
 
   if (alerts.length === 0) {
@@ -26,9 +26,13 @@ export function AlertList({ alerts }: { alerts: SecurityAlert[] }) {
                 <p className="font-medium text-sm text-ink">{alert.title}</p>
                 <p className="text-sm text-ink-soft mt-1 max-w-lg">{alert.detail}</p>
                 <div className="flex items-center gap-2 mt-2 text-xs text-ink-soft font-mono">
-                  <Link href={`/employees/${alert.employeeId}`} className="hover:underline">
-                    {alert.employeeName}
-                  </Link>
+                  {existingEmployeeIds.includes(alert.employeeId) ? (
+                    <Link href={`/employees/${alert.employeeId}`} className="hover:underline">
+                      {alert.employeeName}
+                    </Link>
+                  ) : (
+                    <span>{alert.employeeName} (deleted)</span>
+                  )}
                   · {new Date(alert.timestamp).toLocaleString()}
                 </div>
               </div>

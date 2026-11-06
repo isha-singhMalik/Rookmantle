@@ -11,7 +11,7 @@ export default function AlertsPage() {
         title="Flagged activity"
         description="Blocked actions and suspicious patterns the Security Control Engine has flagged for review."
       />
-      <AlertList alerts={alerts} />
+      <AlertList alerts={alerts} existingEmployeeIds={db.employees.map((e) => e.id)} />
     </div>
   );
 }

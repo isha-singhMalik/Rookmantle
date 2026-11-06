@@ -13,6 +13,7 @@ export default async function LogsPage({
 }) {
   const { verdict } = await searchParams;
   const logs = verdict ? db.logs.filter((l) => l.verdict === verdict) : db.logs;
+  const liveIds = new Set(db.employees.map((e) => e.id));
 
   const filters: { label: string; value?: Verdict }[] = [
     { label: "All" },
@@ -63,9 +64,15 @@ export default async function LogsPage({
             {logs.map((log) => (
               <tr key={log.id}>
                 <td className="px-4 py-3 font-medium text-ink whitespace-nowrap">
-                  <Link href={`/employees/${log.employeeId}`} className="hover:underline">
-                    {log.employeeName}
-                  </Link>
+                  {liveIds.has(log.employeeId) ? (
+                    <Link href={`/employees/${log.employeeId}`} className="hover:underline">
+                      {log.employeeName}
+                    </Link>
+                  ) : (
+                    <span title="This employee has been deleted">
+                      {log.employeeName} <span className="text-xs font-normal text-ink-soft">(deleted)</span>
+                    </span>
+                  )}
                 </td>
                 <td className="px-4 py-3 text-ink-soft max-w-xs">{log.action}</td>
                 <td className="px-4 py-3 text-ink-soft whitespace-nowrap">{CATEGORY_LABEL[log.category]}</td>

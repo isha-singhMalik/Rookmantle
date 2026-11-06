@@ -1,6 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 import { db, nextId } from "./store";
 import { evaluateAction } from "./security-engine";
 import {
@@ -73,6 +74,38 @@ export async function createEmployee(input: {
   revalidatePath("/dashboard");
   revalidatePath("/employees");
   return employee.id;
+}
+
+/**
+ * Permanently removes an AI employee and everything configured on it
+ * (knowledge, workflow, tool connections, permissions).
+ *
+ * The audit trail (action logs and security alerts) is deliberately KEPT so the
+ * history of what the employee did stays intact. Approvals still pending for this
+ * employee are rejected automatically so nothing is left waiting on a person who no
+ * longer exists.
+ */
+export async function deleteEmployee(employeeId: string) {
+  const index = db.employees.findIndex((e) => e.id === employeeId);
+  if (index === -1) redirect("/employees");
+
+  for (const log of db.logs) {
+    if (log.employeeId === employeeId && log.approvalStatus === "pending") {
+      log.approvalStatus = "rejected";
+      log.approvedBy = "System (employee deleted)";
+    }
+  }
+  db.employees.splice(index, 1);
+
+  revalidatePath("/employees");
+  revalidatePath("/dashboard");
+  revalidatePath("/analytics");
+  revalidatePath("/knowledge-base");
+  revalidatePath("/workflows");
+  revalidatePath("/security/logs");
+  revalidatePath("/security/alerts");
+  revalidatePath("/security/approvals");
+  redirect("/employees");
 }
 
 export async function updateEmployeeStatus(employeeId: string, status: AIEmployee["status"]) {

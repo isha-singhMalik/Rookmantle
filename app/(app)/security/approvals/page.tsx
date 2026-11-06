@@ -14,7 +14,7 @@ export default function ApprovalsPage() {
         title="Decisions that need you"
         description="When the Security Control Engine can't auto-decide, it stops here instead of guessing."
       />
-      <ApprovalCenter logs={logs} />
+      <ApprovalCenter logs={logs} existingEmployeeIds={db.employees.map((e) => e.id)} />
     </div>
   );
 }

@@ -1,16 +1,19 @@
-import { H2, P, Ul, Placeholder, EffectiveDate, DraftNotice } from "@/components/legal/legal-content";
+import { Metadata } from "next";
+import { H2, P, Ul, Site, EffectiveDate, DraftNotice } from "@/components/legal/legal-content";
+
+export const metadata: Metadata = { title: "Terms of Service" };
 
 export default function TermsOfServicePage() {
   return (
     <article>
       <h1 className="font-display text-2xl font-semibold text-ink mb-1">Terms of Service</h1>
-      <EffectiveDate date="[Effective Date]" />
+      <EffectiveDate />
       <DraftNotice />
 
       <P>
         These Terms of Service (&quot;Terms&quot;) govern your access to and use of Rookmantle, including the
         website, dashboard, and any PWA or mobile app builds (together, the &quot;Service&quot;), operated by{" "}
-        <Placeholder>Company Legal Name</Placeholder> (&quot;we,&quot; &quot;us&quot;). By creating an account
+        <Site field="companyName" /> (&quot;we,&quot; &quot;us&quot;). By creating an account
         or using the Service, you agree to these Terms.
       </P>
 
@@ -88,7 +91,7 @@ export default function TermsOfServicePage() {
         To the maximum extent permitted by law, neither party will be liable for indirect, incidental,
         special, consequential, or punitive damages, or loss of profits or data, arising from the Service.
         Our total liability for any claim will not exceed the amount you paid us in the{" "}
-        <Placeholder>12 months</Placeholder> preceding the claim.
+        <Site field="liabilityCapPeriod" /> preceding the claim.
       </P>
 
       <H2>10. Termination</H2>
@@ -100,9 +103,9 @@ export default function TermsOfServicePage() {
 
       <H2>11. Governing law & disputes</H2>
       <P>
-        These Terms are governed by the laws of <Placeholder>Jurisdiction, e.g. India</Placeholder>, without
+        These Terms are governed by the laws of <Site field="governingLaw" />, without
         regard to conflict-of-law principles, and disputes will be subject to the exclusive jurisdiction of
-        the courts located in <Placeholder>City</Placeholder>, unless a mandatory consumer-protection law in
+        the courts located in <Site field="jurisdictionCity" />, unless a mandatory consumer-protection law in
         your country of residence gives you the right to a different forum.
       </P>
 
@@ -111,8 +114,8 @@ export default function TermsOfServicePage() {
 
       <H2>13. Contact</H2>
       <P>
-        <Placeholder>Company Legal Name</Placeholder> — <Placeholder>registered address</Placeholder> —{" "}
-        <Placeholder>legal@rookmantle.example</Placeholder>
+        <Site field="companyName" /> — <Site field="registeredAddress" /> —{" "}
+        <Site field="legalEmail" />
       </P>
     </article>
   );
