@@ -62,13 +62,13 @@ export function SimulatePanel({ employee }: { employee: AIEmployee }) {
         className="w-full rounded-md border border-line px-3 py-2 text-sm mb-3 focus:outline-none focus:border-graphite"
       />
 
-      <div className="grid grid-cols-3 gap-2 mb-3">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 mb-3">
         <div>
           <label className="block text-xs font-medium text-ink-soft mb-1.5">Category</label>
           <select
             value={category}
             onChange={(e) => setCategory(e.target.value as ActionCategory)}
-            className="w-full rounded-md border border-line px-2 py-2 text-xs focus:outline-none focus:border-graphite"
+            className="w-full min-w-0 rounded-md border border-line px-2 py-2 text-xs focus:outline-none focus:border-graphite"
           >
             {CATEGORIES.map((c) => (
               <option key={c} value={c}>
@@ -82,7 +82,7 @@ export function SimulatePanel({ employee }: { employee: AIEmployee }) {
           <select
             value={tool}
             onChange={(e) => setTool(e.target.value)}
-            className="w-full rounded-md border border-line px-2 py-2 text-xs focus:outline-none focus:border-graphite"
+            className="w-full min-w-0 rounded-md border border-line px-2 py-2 text-xs focus:outline-none focus:border-graphite"
           >
             {employee.tools.map((t) => (
               <option key={t.toolId} value={t.toolId}>
@@ -96,7 +96,7 @@ export function SimulatePanel({ employee }: { employee: AIEmployee }) {
           <select
             value={sensitivity}
             onChange={(e) => setSensitivity(e.target.value as RiskLevel)}
-            className="w-full rounded-md border border-line px-2 py-2 text-xs focus:outline-none focus:border-graphite"
+            className="w-full min-w-0 rounded-md border border-line px-2 py-2 text-xs focus:outline-none focus:border-graphite"
           >
             {SENSITIVITIES.map((s) => (
               <option key={s} value={s}>

@@ -35,7 +35,7 @@ export default function DashboardPage() {
       </div>
 
       <div className="grid lg:grid-cols-5 gap-5">
-        <Panel className="lg:col-span-3 p-5">
+        <Panel className="lg:col-span-3 min-w-0 p-5">
           <div className="flex items-center justify-between mb-4">
             <h2 className="font-display font-semibold text-ink">Recent AI employee activity</h2>
             <Link href="/security/logs" className="text-xs text-ink-soft hover:text-ink inline-flex items-center gap-1">
@@ -59,7 +59,7 @@ export default function DashboardPage() {
           </div>
         </Panel>
 
-        <Panel className="lg:col-span-2 p-5">
+        <Panel className="lg:col-span-2 min-w-0 p-5">
           <div className="flex items-center justify-between mb-4">
             <h2 className="font-display font-semibold text-ink">Your AI employees</h2>
             <Link href="/employees" className="text-xs text-ink-soft hover:text-ink inline-flex items-center gap-1">

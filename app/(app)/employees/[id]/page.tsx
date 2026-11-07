@@ -32,7 +32,7 @@ export default async function EmployeeDetailPage({ params }: { params: Promise<{
               </div>
               <p className="text-sm text-ink-soft capitalize">
                 {employee.role.replace("-", " ")} · {INDUSTRIES.find((i) => i.id === employee.industry)?.name} · ID{" "}
-                <span className="font-mono">{employee.id}</span>
+                <span className="font-mono normal-case">{employee.id}</span>
               </p>
             </div>
           </div>
@@ -65,7 +65,7 @@ export default async function EmployeeDetailPage({ params }: { params: Promise<{
       </Panel>
 
       <div className="grid lg:grid-cols-3 gap-5">
-        <div className="lg:col-span-2 flex flex-col gap-5">
+        <div className="lg:col-span-2 min-w-0 flex flex-col gap-5">
           <Panel className="p-5">
             <h2 className="font-display font-semibold text-ink mb-3">Workflow — {employee.workflow.name}</h2>
             <ol className="flex flex-col gap-3">
@@ -115,7 +115,7 @@ export default async function EmployeeDetailPage({ params }: { params: Promise<{
           </Panel>
         </div>
 
-        <div className="flex flex-col gap-5">
+        <div className="min-w-0 flex flex-col gap-5">
           <Panel className="p-5">
             <ApprovalPanel employeeId={employee.id} current={employee.requiresApprovalOver} />
           </Panel>
