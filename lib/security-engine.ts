@@ -5,6 +5,7 @@ import {
   RiskLevel,
   Verdict,
 } from "./types";
+import { industryLabel, roleLabel } from "./labels";
 
 const RISK_ORDER: Record<RiskLevel, number> = {
   low: 0,
@@ -131,7 +132,7 @@ export function evaluateAction(input: EvaluationInput): EvaluationResult {
     riskScore,
     riskLevel,
     reason: policy
-      ? `Within policy "${policy.name}" auto-approve threshold for ${employee.role} in ${employee.industry}.`
+      ? `Within policy "${policy.name}" auto-approve threshold for ${roleLabel(employee)} in ${industryLabel(employee)}.`
       : `Low enough risk (${riskLevel}) with no matching restrictive policy — executed automatically.`,
     matchedPolicy: policy?.name,
     flagAsSuspicious: false,

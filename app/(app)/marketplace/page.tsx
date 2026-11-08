@@ -1,6 +1,7 @@
 import { ROLE_TEMPLATES, INDUSTRIES, TOOL_LABEL } from "@/lib/reference-data";
 import { PageHeader, Panel, Avatar, LinkButton } from "@/components/ui/primitives";
 import { IndustryId } from "@/lib/types";
+import { Plus } from "lucide-react";
 import clsx from "clsx";
 import Link from "next/link";
 
@@ -50,6 +51,24 @@ export default async function MarketplacePage({
       </div>
 
       <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <Panel className="p-5 flex flex-col border-dashed border-graphite/40">
+          <div className="flex items-center gap-3 mb-3">
+            <div className="flex items-center justify-center h-9 w-9 rounded-md bg-graphite text-white">
+              <Plus size={18} />
+            </div>
+            <div>
+              <h3 className="font-display font-semibold text-ink text-[15px]">Build your own</h3>
+              <p className="text-xs text-ink-soft">Custom role</p>
+            </div>
+          </div>
+          <p className="text-sm text-ink-soft mb-4 flex-1">
+            Nothing here fits? Define your own role, the work it should get done, its tools and its permissions.
+            Works for any industry, including ones we have not listed.
+          </p>
+          <LinkButton href={`/employees/new?custom=1${industry ? `&industry=${industry}` : ""}`} className="w-full">
+            Start from scratch
+          </LinkButton>
+        </Panel>
         {templates.map((t) => (
           <Panel key={t.id} className="p-5 flex flex-col">
             <div className="flex items-center gap-3 mb-3">

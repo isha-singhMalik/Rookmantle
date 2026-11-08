@@ -3,6 +3,7 @@
 import { useState, useTransition } from "react";
 import clsx from "clsx";
 import { AIEmployee } from "@/lib/types";
+import { roleLabel } from "@/lib/labels";
 import { updateWorkflowSteps } from "@/lib/actions";
 import { Avatar, Button, Panel } from "@/components/ui/primitives";
 import { ArrowUp, ArrowDown, Trash2, Plus, Save } from "lucide-react";
@@ -69,7 +70,7 @@ export function WorkflowBuilder({ employees }: { employees: AIEmployee[] }) {
             <Avatar seed={emp.avatarSeed} name={emp.name} size={30} />
             <div className="min-w-0">
               <p className="text-sm font-medium text-ink truncate">{emp.name}</p>
-              <p className="text-xs text-ink-soft capitalize truncate">{emp.role.replace("-", " ")}</p>
+              <p className="text-xs text-ink-soft capitalize truncate">{roleLabel(emp)}</p>
             </div>
           </button>
         ))}

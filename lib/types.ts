@@ -17,6 +17,9 @@ export type IndustryId =
   | "ecommerce"
   | "customer-support";
 
+/** An industry from our list, or "custom" for one the business defines itself. */
+export type IndustryKey = IndustryId | "custom";
+
 export interface Industry {
   id: IndustryId;
   name: string;
@@ -34,6 +37,9 @@ export type EmployeeRole =
   | "follow-up"
   | "research";
 
+/** A role from our templates, or "custom" for one the business defines itself. */
+export type RoleKey = EmployeeRole | "custom";
+
 export interface RoleTemplate {
   id: string;
   role: EmployeeRole;
@@ -43,6 +49,7 @@ export interface RoleTemplate {
   defaultPermissions: string[];
   suggestedIndustries: IndustryId[];
   avatarSeed: string;
+  defaultSteps: { title: string; detail: string }[];
 }
 
 export type EmployeeStatus = "active" | "paused" | "draft";
@@ -83,8 +90,14 @@ export interface Permission {
 export interface AIEmployee {
   id: string;
   name: string;
-  role: EmployeeRole;
-  industry: IndustryId;
+  role: RoleKey;
+  industry: IndustryKey;
+  /** Only set when industry is "custom": the business's own industry name. */
+  customIndustry?: string;
+  /** Only set when role is "custom": the business's own role title. */
+  customRole?: string;
+  /** Plain-language description of the work this employee should get done. */
+  jobDescription?: string;
   status: EmployeeStatus;
   avatarSeed: string;
   createdAt: string;
@@ -112,7 +125,7 @@ export interface ActionLogEntry {
   id: string;
   employeeId: string;
   employeeName: string;
-  industry: IndustryId;
+  industry: IndustryKey;
   action: string;
   category: ActionCategory;
   tool: string;
@@ -140,8 +153,8 @@ export interface SecurityAlert {
 export interface PolicyRule {
   id: string;
   name: string;
-  appliesToRole: EmployeeRole | "all";
-  appliesToIndustry: IndustryId | "all";
+  appliesToRole: RoleKey | "all";
+  appliesToIndustry: IndustryKey | "all";
   category: ActionCategory | "all";
   maxAutoApproveRisk: RiskLevel; // risk at/below this auto-allows
   blockAbove: RiskLevel; // risk at/above this blocks outright

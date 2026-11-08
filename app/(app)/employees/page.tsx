@@ -1,5 +1,5 @@
 import { db } from "@/lib/store";
-import { INDUSTRIES } from "@/lib/reference-data";
+import { industryLabel, roleLabel } from "@/lib/labels";
 import { PageHeader, Panel, Avatar, LinkButton, EmptyState } from "@/components/ui/primitives";
 import { StatusDot } from "@/components/ui/badges";
 import Link from "next/link";
@@ -38,7 +38,7 @@ export default function EmployeesPage() {
                 <span className="text-xs text-ink-soft capitalize">{emp.status}</span>
               </div>
               <p className="text-xs text-ink-soft capitalize mt-0.5">
-                {emp.role.replace("-", " ")} · {INDUSTRIES.find((i) => i.id === emp.industry)?.name}
+                {roleLabel(emp)} · {industryLabel(emp)}
               </p>
             </div>
             <div className="hidden sm:flex gap-6 text-right">

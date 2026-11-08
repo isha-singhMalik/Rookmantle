@@ -7,65 +7,84 @@ import { evaluateAction } from "./security-engine";
 import {
   ActionCategory,
   AIEmployee,
-  EmployeeRole,
-  IndustryId,
+  IndustryKey,
   PolicyRule,
   RiskLevel,
+  RoleKey,
 } from "./types";
-import { ROLE_TEMPLATES } from "./reference-data";
+import { INTEGRATIONS, ROLE_TEMPLATES } from "./reference-data";
+
+const clean = (v: string | undefined, max: number) => (v ?? "").trim().slice(0, max);
 
 export async function createEmployee(input: {
   name: string;
-  role: EmployeeRole;
-  industry: IndustryId;
+  role: RoleKey;
+  industry: IndustryKey;
+  customIndustry?: string;
+  customRole?: string;
+  jobDescription?: string;
   templateId: string;
   knowledgeNote?: string;
   requiresApprovalOver: RiskLevel;
+  tools: string[];
+  permissions: { label: string; granted: boolean; sensitivity: RiskLevel }[];
+  workflowSteps: { title: string; detail: string }[];
 }) {
   const template = ROLE_TEMPLATES.find((t) => t.id === input.templateId);
   const now = new Date().toISOString();
 
+  const isCustomIndustry = input.industry === "custom";
+  const isCustomRole = input.role === "custom";
+  const customIndustry = clean(input.customIndustry, 60);
+  const customRole = clean(input.customRole, 60);
+  const roleName = isCustomRole ? customRole || "Custom role" : template?.name ?? "AI Employee";
+
+  // Only accept tools that really exist; ignore anything else.
+  const knownTools = new Set(INTEGRATIONS.map((i) => i.id));
+  const tools = Array.from(new Set(input.tools)).filter((id) => knownTools.has(id)).slice(0, 30);
+
+  const permissions = input.permissions
+    .map((p) => ({ label: clean(p.label, 80), granted: !!p.granted, sensitivity: p.sensitivity }))
+    .filter((p) => p.label)
+    .slice(0, 40)
+    .map((p, i) => ({ id: `p${i + 1}`, ...p }));
+
+  const steps = input.workflowSteps
+    .map((st) => ({ title: clean(st.title, 80), detail: clean(st.detail, 240) }))
+    .filter((st) => st.title)
+    .slice(0, 20);
+
+  const name = clean(input.name, 60) || roleName;
+
   const employee: AIEmployee = {
     id: nextId("emp"),
-    name: input.name || `${template?.name ?? "AI Employee"}`,
+    name,
     role: input.role,
     industry: input.industry,
+    customIndustry: isCustomIndustry ? customIndustry || "Custom industry" : undefined,
+    customRole: isCustomRole ? customRole || "Custom role" : undefined,
+    jobDescription: clean(input.jobDescription, 1000) || undefined,
     status: "active",
-    avatarSeed: input.name || template?.avatarSeed || "agent",
+    avatarSeed: name || template?.avatarSeed || "agent",
     createdAt: now,
-    knowledge: input.knowledgeNote
+    knowledge: clean(input.knowledgeNote, 5000)
       ? [
           {
             id: nextId("kb"),
             title: "Initial business knowledge",
             type: "note",
-            content: input.knowledgeNote,
+            content: clean(input.knowledgeNote, 5000),
             addedAt: now,
           },
         ]
       : [],
     workflow: {
       id: nextId("wf"),
-      name: `${template?.name ?? "New employee"} default workflow`,
-      steps: (template?.defaultTools ?? []).length
-        ? [
-            { id: nextId("s"), title: "Receive task", detail: "Intake the incoming request or trigger." },
-            { id: nextId("s"), title: "Take action", detail: "Perform the core task using connected tools." },
-            { id: nextId("s"), title: "Report outcome", detail: "Log the result and notify relevant humans." },
-          ]
-        : [],
+      name: `${roleName} workflow`,
+      steps: steps.map((st) => ({ id: nextId("s"), ...st })),
     },
-    tools: (template?.defaultTools ?? []).map((toolId) => ({
-      toolId,
-      connected: true,
-      scopes: ["read", "write"],
-    })),
-    permissions: (template?.defaultPermissions ?? []).map((p, i) => ({
-      id: `p${i + 1}`,
-      label: p.replace(/_/g, " "),
-      granted: true,
-      sensitivity: "medium" as RiskLevel,
-    })),
+    tools: tools.map((toolId) => ({ toolId, connected: true, scopes: ["read", "write"] })),
+    permissions,
     requiresApprovalOver: input.requiresApprovalOver,
     stats: { tasksCompleted: 0, actionsBlocked: 0, lastActiveAt: now },
   };
@@ -73,6 +92,8 @@ export async function createEmployee(input: {
   db.employees.unshift(employee);
   revalidatePath("/dashboard");
   revalidatePath("/employees");
+  revalidatePath("/workflows");
+  revalidatePath("/analytics");
   return employee.id;
 }
 

@@ -43,6 +43,18 @@ export default function IndustriesPage() {
             </Panel>
           );
         })}
+        <Panel className="p-5 flex flex-col border-dashed border-graphite/40">
+          <h3 className="font-display font-semibold text-ink mb-2">Your own industry</h3>
+          <p className="text-sm text-ink-soft mb-4 flex-1">
+            Not on the list? Name your own industry and build an AI employee for the work your business actually does.
+          </p>
+          <Link
+            href="/employees/new?custom=1"
+            className="text-sm font-medium text-graphite inline-flex items-center gap-1 hover:gap-1.5 transition-all"
+          >
+            Define your own <ArrowUpRight size={14} />
+          </Link>
+        </Panel>
       </div>
     </div>
   );

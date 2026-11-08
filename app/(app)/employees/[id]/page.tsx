@@ -1,5 +1,5 @@
 import { db } from "@/lib/store";
-import { INDUSTRIES } from "@/lib/reference-data";
+import { industryLabel, roleLabel } from "@/lib/labels";
 import { notFound } from "next/navigation";
 import { Avatar, Panel } from "@/components/ui/primitives";
 import { StatusDot, VerdictBadge } from "@/components/ui/badges";
@@ -31,7 +31,7 @@ export default async function EmployeeDetailPage({ params }: { params: Promise<{
                 <StatusDot status={employee.status} />
               </div>
               <p className="text-sm text-ink-soft capitalize">
-                {employee.role.replace("-", " ")} · {INDUSTRIES.find((i) => i.id === employee.industry)?.name} · ID{" "}
+                {roleLabel(employee)} · {industryLabel(employee)} · ID{" "}
                 <span className="font-mono normal-case">{employee.id}</span>
               </p>
             </div>
@@ -66,6 +66,13 @@ export default async function EmployeeDetailPage({ params }: { params: Promise<{
 
       <div className="grid lg:grid-cols-3 gap-5">
         <div className="lg:col-span-2 min-w-0 flex flex-col gap-5">
+          {employee.jobDescription && (
+            <Panel className="p-5">
+              <h2 className="font-display font-semibold text-ink mb-2">What {employee.name} does</h2>
+              <p className="text-sm text-ink-soft leading-relaxed whitespace-pre-line">{employee.jobDescription}</p>
+            </Panel>
+          )}
+
           <Panel className="p-5">
             <h2 className="font-display font-semibold text-ink mb-3">Workflow — {employee.workflow.name}</h2>
             <ol className="flex flex-col gap-3">

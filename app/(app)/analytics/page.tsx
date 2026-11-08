@@ -1,5 +1,5 @@
 import { db } from "@/lib/store";
-import { INDUSTRIES } from "@/lib/reference-data";
+import { industryLabel } from "@/lib/labels";
 import { PageHeader } from "@/components/ui/primitives";
 import { StatCard } from "@/components/stat-card";
 import { VerdictChart, IndustryChart, DailyActivityChart } from "@/components/analytics-charts";
@@ -15,10 +15,14 @@ export default function AnalyticsPage() {
     { name: "Blocked", value: logs.filter((l) => l.verdict === "BLOCK").length },
   ];
 
-  const industryData = INDUSTRIES.map((i) => ({
-    name: i.name,
-    value: employees.filter((e) => e.industry === i.id).reduce((sum, e) => sum + e.stats.tasksCompleted, 0),
-  })).filter((d) => d.value > 0);
+  const tasksByIndustry = new Map<string, number>();
+  for (const e of employees) {
+    const key = industryLabel(e);
+    tasksByIndustry.set(key, (tasksByIndustry.get(key) ?? 0) + e.stats.tasksCompleted);
+  }
+  const industryData = [...tasksByIndustry.entries()]
+    .map(([name, value]) => ({ name, value }))
+    .filter((d) => d.value > 0);
 
   const days = [...Array(7)].map((_, i) => {
     const d = new Date();

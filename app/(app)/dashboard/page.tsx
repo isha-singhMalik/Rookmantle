@@ -2,13 +2,13 @@ import { db } from "@/lib/store";
 import { PageHeader, Panel, Avatar, LinkButton } from "@/components/ui/primitives";
 import { StatCard } from "@/components/stat-card";
 import { VerdictBadge } from "@/components/ui/badges";
-import { INDUSTRIES } from "@/lib/reference-data";
+import { industryLabel, roleLabel } from "@/lib/labels";
 import { Users, Building2, CheckCircle2, Clock, ShieldX, BellRing, ArrowRight } from "lucide-react";
 import Link from "next/link";
 
 export default function DashboardPage() {
   const employees = db.employees;
-  const activeIndustries = new Set(employees.map((e) => e.industry)).size;
+  const activeIndustries = new Set(employees.map((e) => industryLabel(e))).size;
   const tasksCompleted = employees.reduce((sum, e) => sum + e.stats.tasksCompleted, 0);
   const pendingApprovals = db.logs.filter((l) => l.approvalStatus === "pending").length;
   const blockedActions = db.logs.filter((l) => l.verdict === "BLOCK").length;
@@ -77,7 +77,7 @@ export default function DashboardPage() {
                 <div className="min-w-0 flex-1">
                   <p className="text-sm font-medium text-ink truncate">{emp.name}</p>
                   <p className="text-xs text-ink-soft capitalize truncate">
-                    {emp.role} · {INDUSTRIES.find((i) => i.id === emp.industry)?.name}
+                    {roleLabel(emp)} · {industryLabel(emp)}
                   </p>
                 </div>
                 <span

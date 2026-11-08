@@ -9,7 +9,7 @@ import { Button, Panel } from "@/components/ui/primitives";
 import { RiskBadge } from "@/components/ui/badges";
 import { Plus, Power } from "lucide-react";
 
-const ROLES = ["all", "sales", "support", "recruiter", "operations", "accounting", "marketing", "follow-up", "research"];
+const ROLES = ["all", "sales", "support", "recruiter", "operations", "accounting", "marketing", "follow-up", "research", "custom"];
 const CATEGORIES = ["all", "communication", "data_access", "financial", "scheduling", "record_update", "external_tool"];
 const RISKS: RiskLevel[] = ["low", "medium", "high", "critical"];
 
@@ -63,7 +63,7 @@ export function PolicyManager({ policies }: { policies: PolicyRule[] }) {
                 className="w-full rounded-md border border-line px-2 py-2 text-sm"
               >
                 {ROLES.map((r) => (
-                  <option key={r} value={r}>{r === "all" ? "All roles" : r}</option>
+                  <option key={r} value={r}>{r === "all" ? "All roles" : r === "custom" ? "Custom roles (built by you)" : r}</option>
                 ))}
               </select>
             </div>
@@ -75,6 +75,7 @@ export function PolicyManager({ policies }: { policies: PolicyRule[] }) {
                 className="w-full rounded-md border border-line px-2 py-2 text-sm"
               >
                 <option value="all">All industries</option>
+                <option value="custom">Custom industries (defined by you)</option>
                 {INDUSTRIES.map((i) => (
                   <option key={i.id} value={i.id}>{i.name}</option>
                 ))}
